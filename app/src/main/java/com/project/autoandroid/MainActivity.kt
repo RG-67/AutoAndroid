@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AutoAndroidTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                    innerPadding.calculateTopPadding()
                 }
             }
         }
