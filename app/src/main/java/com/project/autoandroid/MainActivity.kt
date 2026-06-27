@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     innerPadding.calculateTopPadding()
                     innerPadding.calculateBottomPadding()
-                    Log.d("INR_PADDING: ", "Padding added")
+                    Log.d("INR_PADDING:", "Padding added")
                 }
             }
         }
