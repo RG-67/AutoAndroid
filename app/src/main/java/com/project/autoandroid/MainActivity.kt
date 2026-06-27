@@ -1,6 +1,7 @@
 package com.project.autoandroid
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +23,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     innerPadding.calculateTopPadding()
                     innerPadding.calculateBottomPadding()
+                    Log.d("INR_PADDING: ", "Padding added")
                 }
             }
         }
