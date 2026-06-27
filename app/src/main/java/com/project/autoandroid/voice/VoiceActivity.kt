@@ -20,6 +20,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +52,7 @@ class VoiceActivity : ComponentActivity() {
 
     @Composable
     fun VoiceUi(modifier: Modifier = Modifier) {
+        var voiceInput by remember { mutableStateOf("") }
         Column(
             modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -59,8 +64,7 @@ class VoiceActivity : ComponentActivity() {
                     .height(50.dp)
                     .clip(CircleShape)
                     .clickable {
-                        Toast.makeText(this@VoiceActivity, "Image clicked", Toast.LENGTH_SHORT)
-                            .show()
+                        voiceInput = "Image clicked"
                     },
                 contentDescription = getString(R.string.app_name),
                 painter = painterResource(R.drawable.mic)
@@ -68,12 +72,12 @@ class VoiceActivity : ComponentActivity() {
 
             Text(
                 modifier = Modifier.padding(10.dp),
-                text = "TEXT",
+                text = voiceInput,
                 style = TextStyle(
                     fontSize = TextUnit.Unspecified,
                     color = Color.Black,
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.Normal,
                 )
             )
         }
