@@ -1,10 +1,14 @@
 package com.project.autoandroid.voice
 
+import android.app.ComponentCaller
+import android.content.Intent
 import android.graphics.Paint.Align
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +44,18 @@ import com.project.autoandroid.ui.theme.AutoAndroidTheme
 
 
 class VoiceActivity : ComponentActivity() {
+
+    private var voiceInput by mutableStateOf("")
+
+    private val speechLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val text = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    ?.firstOrNull()
+                voiceInput = text ?: ""
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -52,8 +68,6 @@ class VoiceActivity : ComponentActivity() {
 
     @Composable
     fun VoiceUi(modifier: Modifier = Modifier) {
-        var voiceInput by remember { mutableStateOf("") }
-
         Column(
             modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -65,7 +79,7 @@ class VoiceActivity : ComponentActivity() {
                     .height(50.dp)
                     .clip(CircleShape)
                     .clickable {
-                        voiceInput = "Image clicked"
+                        speechToText()
                     },
                 contentDescription = getString(R.string.app_name),
                 painter = painterResource(R.drawable.mic)
@@ -82,6 +96,18 @@ class VoiceActivity : ComponentActivity() {
                 )
             )
         }
+
+    }
+
+
+    private fun speechToText() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+        }
+        speechLauncher.launch(intent)
     }
 
 
