@@ -53,6 +53,7 @@ class VoiceActivity : ComponentActivity() {
     @Composable
     fun VoiceUi(modifier: Modifier = Modifier) {
         var voiceInput by remember { mutableStateOf("") }
+
         Column(
             modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
