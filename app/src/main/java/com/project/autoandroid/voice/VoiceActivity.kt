@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Paint.Align
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.project.autoandroid.R
@@ -53,6 +55,9 @@ class VoiceActivity : ComponentActivity() {
                 val text = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                     ?.firstOrNull()
                 voiceInput = text ?: ""
+                if (voiceInput.lowercase().contains("open whatsapp")) {
+                    openWhatsApp()
+                }
             }
         }
 
@@ -110,6 +115,20 @@ class VoiceActivity : ComponentActivity() {
         speechLauncher.launch(intent)
     }
 
+
+    private fun openWhatsApp() {
+        var intent = packageManager.getLaunchIntentForPackage("com.whatsapp")
+        if (intent != null) {
+            startActivity(intent)
+        } else {
+            intent = packageManager.getLaunchIntentForPackage("com.whatsapp.w4b")
+            if (intent != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "WhatsApp not installed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 
 }
