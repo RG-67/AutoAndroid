@@ -128,6 +128,7 @@ class VoiceActivity : ComponentActivity() {
                 Toast.makeText(this, "WhatsApp not installed", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
 
